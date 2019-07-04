@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>我的画板</title>
+  </head>
+  <body>
+    <canvas id="canvas" width="300" height="300"></canvas>
+
+
+
+
+
+
+
+
+
+    <script>
+      var canvas = document.getElementById("canvas")
+      var ctx = canvas.getContext("2d")
+      ctx.fillStyle = "red"//设置颜色 这个要在上面  放下面 它就先画了就改变不了颜色了
+      ctx.fillRect(0, 0, 100, 100)//画画
+    </script>
+  </body>
+</html>
