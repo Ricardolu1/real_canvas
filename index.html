@@ -32,7 +32,8 @@
         drawCircle(x,y,3)   
         drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y)//  注意要实时更新第一个点的位置
         lastPoint=newPoint// 鼠标只要一动上一个点就变成现在移动到的点
-        //这是最核心的一句话，这个不是api这个是我想出来的，其他
+        //只要一移动起点就变成现鼠标移动到的这个点，从而实现连续划线
+        //这是最核心的一句话，这个不是api这个是我想出来的，其他都不重要
         }
       }
 
@@ -42,17 +43,17 @@
 
       function drawCircle(x,y,radius) {
         context.beginPath()
-        context.fillStyle="red"
+        context.fillStyle="black"
         context.arc(x, y, radius, 0, Math.PI*2)
         context.fill()
       }
 
       function drawLine(x1,y1,x2,y2) {
         context.beginPath()
-        context.strokeStyle="red"
-        context.moveTo(x1,y1)
+        context.strokeStyle="black"
+        context.moveTo(x1,y1)//起点
         context.lineWidth=6
-        context.lineTo(x2,y2)
+        context.lineTo(x2,y2)//终点
         context.stroke()
         context.closePath()
       }
