@@ -8,30 +8,54 @@
     <title>我的画板</title>
   </head>
   <body>
-    <canvas id="canvas" width="300" height="300"></canvas>
-
-
-
-
-
+    <canvas id="canvas" width="500" height="500"></canvas>
 
     <script>
       var canvas = document.getElementById("canvas")
       var context = canvas.getContext("2d")
-      context.strokeStyle = 'yellow'
-      context.strokeRect(10, 10, 100, 100)
-      context.fillStyle = "red"//设置颜色 这个要在上面  放下面 它就先画了就改变不了颜色了
-      context.fillRect(10, 10, 100, 100)//画画
-      context.clearRect(50, 50, 10, 10)
+      var paiting=false
+      var lastPoint={x:undefined, y:undefined}
+      var newPoint={x:undefined, y:undefined}
+      canvas.onmousedown=function(a) {
+        paiting=true
+        var x=a.clientX//这是相对于视口的位置，不是相对于canvas的位置
+        var y=a.clientY
+        lastPoint={x:x,y:y}
+        drawCircle(x,y,3)
+      }
 
-      context.beginPath()
-      context.moveTo(240,240)
-      context.lineTo(300,240)
-      context.lineTo(300,300)
-      context.fill()
+      canvas.onmousemove=function(a) {
+        if(paiting){
+        var x=a.clientX
+        var y=a.clientY
+        newPoint={x:x,y:y}
+        drawCircle(x,y,3)   
+        drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y)//  注意要实时更新第一个点的位置
+        lastPoint=newPoint// 鼠标只要一动上一个点就变成现在移动到的点
+        //这是最核心的一句话，这个不是api这个是我想出来的，其他
+        }
+      }
 
+      canvas.onmouseup=function(a) {
+        paiting=false
+      }
 
+      function drawCircle(x,y,radius) {
+        context.beginPath()
+        context.fillStyle="red"
+        context.arc(x, y, radius, 0, Math.PI*2)
+        context.fill()
+      }
 
+      function drawLine(x1,y1,x2,y2) {
+        context.beginPath()
+        context.strokeStyle="red"
+        context.moveTo(x1,y1)
+        context.lineWidth=6
+        context.lineTo(x2,y2)
+        context.stroke()
+        context.closePath()
+      }
     </script>
   </body>
 </html>
