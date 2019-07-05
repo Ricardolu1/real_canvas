@@ -30,6 +30,7 @@
 
       var using = false//默认情况下，在使用画笔。意思是工具的使用状态
 
+
       var lastPoint = { x: undefined, y: undefined }
 
       var newPoint = { x: undefined, y: undefined }
@@ -53,6 +54,9 @@
         if (eraserEnabled) {
           if (using) {
             context.clearRect(x-5, y-5, 10, 10);
+//这里容易出现一种情况就，我点了橡皮擦，没有按下鼠标橡皮擦，就开始工作了。这样在鼠标移动的时候，就会擦掉我的画。我们需要的是按下鼠标橡皮才开始工作。
+//分支语句的意义在于如果橡皮工作，画笔就不工作。 
+//橡皮布被按就和原来的代码没有区别，使用分支语句，不需要对原有代码做大的改动
           }
         } else {
           if (using) {
