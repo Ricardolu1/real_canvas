@@ -15,14 +15,23 @@
 
 
 
-
-
-
     <script>
       var canvas = document.getElementById("canvas")
-      var ctx = canvas.getContext("2d")
-      ctx.fillStyle = "red"//设置颜色 这个要在上面  放下面 它就先画了就改变不了颜色了
-      ctx.fillRect(0, 0, 100, 100)//画画
+      var context = canvas.getContext("2d")
+      context.strokeStyle = 'yellow'
+      context.strokeRect(10, 10, 100, 100)
+      context.fillStyle = "red"//设置颜色 这个要在上面  放下面 它就先画了就改变不了颜色了
+      context.fillRect(10, 10, 100, 100)//画画
+      context.clearRect(50, 50, 10, 10)
+
+      context.beginPath()
+      context.moveTo(240,240)
+      context.lineTo(300,240)
+      context.lineTo(300,300)
+      context.fill()
+
+
+
     </script>
   </body>
 </html>
