@@ -9,53 +9,88 @@
   </head>
   <body>
     <canvas id="canvas" width="500" height="500"></canvas>
-
+    <button id="eraser">橡皮擦</button>
     <script>
-      var canvas = document.getElementById("canvas")
-      var context = canvas.getContext("2d")
-      var paiting=false
-      var lastPoint={x:undefined, y:undefined}
-      var newPoint={x:undefined, y:undefined}
-      canvas.onmousedown=function(a) {
-        paiting=true
-        var x=a.clientX//这是相对于视口的位置，不是相对于canvas的位置
-        var y=a.clientY
-        lastPoint={x:x,y:y}
-        drawCircle(x,y,3)
+      function adjustSize() {
+        var pageWidth = document.documentElement.clientWidth
+        var pageHeight = document.documentElement.clientHeight
+        canvas.width = pageWidth
+        canvas.height = pageHeight //这四行代码出现了两遍，所以我写个函数
+        //这是最好背的一种获取页面宽高的方法.注意这和用css设置宽高是不一样的，这是属性，不是样式 css设置样式会出现画图时，鼠标位置和划线位置不一致的现象，这是由于缩放导致的
       }
 
-      canvas.onmousemove=function(a) {
-        if(paiting){
-        var x=a.clientX
-        var y=a.clientY
-        newPoint={x:x,y:y}
-        drawCircle(x,y,3)   
-        drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y)//  注意要实时更新第一个点的位置
-        lastPoint=newPoint// 鼠标只要一动上一个点就变成现在移动到的点
-        //只要一移动起点就变成现鼠标移动到的这个点，从而实现连续划线
-        //这是最核心的一句话，这个不是api这个是我想出来的，其他都不重要
+      var canvas = document.getElementById("canvas")
+      adjustSize()
+
+      window.onresize = function() {
+        adjustSize()
+      }
+
+      var context = canvas.getContext("2d")
+
+      var using = false//默认情况下，在使用画笔。意思是工具的使用状态
+
+      var lastPoint = { x: undefined, y: undefined }
+
+      var newPoint = { x: undefined, y: undefined }
+
+      canvas.onmousedown = function(a) {
+        var x = a.clientX //这是相对于视口的位置，不是相对于canvas的位置
+        var y = a.clientY
+        if (eraserEnabled) {
+          using=true
+          context.clearRect(x-5, y-5, 10, 10);
+        } else {
+          using = true
+          lastPoint = { x: x, y: y }
+          drawCircle(x, y, 3)
         }
       }
 
-      canvas.onmouseup=function(a) {
-        paiting=false
+      canvas.onmousemove = function(a) {
+        var x = a.clientX
+        var y = a.clientY
+        if (eraserEnabled) {
+          if (using) {
+            context.clearRect(x-5, y-5, 10, 10);
+          }
+        } else {
+          if (using) {
+            newPoint = { x: x, y: y }
+            drawCircle(x, y, 3)
+            drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y) //  注意要实时更新起点的位置
+            lastPoint = newPoint // 鼠标只要一动上一个点就变成现在移动到的点
+            //只要一移动起点就变成现鼠标移动到的这个点，从而实现连续划线
+            //这是最核心的一句话，这个不是api这个是我想出来的，其他都不重要
+            //注意这句话一定要在划线的语句之后，画完线之后在把现在点的坐标传给起点，逻辑上最最重要的一点
+          }
+        }
       }
 
-      function drawCircle(x,y,radius) {
+      canvas.onmouseup = function(a) {
+        using = false
+      }
+
+      function drawCircle(x, y, radius) {
         context.beginPath()
-        context.fillStyle="black"
-        context.arc(x, y, radius, 0, Math.PI*2)
+        context.fillStyle = "black"
+        context.arc(x, y, radius, 0, Math.PI * 2)
         context.fill()
       }
 
-      function drawLine(x1,y1,x2,y2) {
+      function drawLine(x1, y1, x2, y2) {
         context.beginPath()
-        context.strokeStyle="black"
-        context.moveTo(x1,y1)//起点
-        context.lineWidth=6
-        context.lineTo(x2,y2)//终点
+        context.strokeStyle = "black"
+        context.moveTo(x1, y1) //起点
+        context.lineWidth = 6
+        context.lineTo(x2, y2) //终点
         context.stroke()
         context.closePath()
+      }
+
+      var eraserEnabled = false
+      eraser.onclick = function() {
+        eraserEnabled = !eraserEnabled
       }
     </script>
   </body>
