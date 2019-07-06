@@ -50,23 +50,44 @@ function autoSetCanvas(canvas) {
 function lisenToUser(canvas) {
   var using = false //默认情况下，在使用画笔。意思是工具的使用状态
 
-  var lastPoint = { x: undefined, y: undefined }
-  var newPoint = { x: undefined, y: undefined }
+  var lastPoint = {x: undefined, y: undefined }
+  var newPoint = {x: undefined, y: undefined }
 
   //特性检测
   if (document.body.ontouchstart !== undefined) {
     //触屏设备
 
-    canvas.ontouchstart = function() {
-      console.log("开始摸我了")
+    canvas.ontouchstart = function(a) {
+      var x = a.touches[0].clientX
+      var y = a.touches[0].clientY
+      console.log(x, y)
+      using = true
+      if (eraserEnabled) {
+        context.clearRect(x - 5, y - 5, 10, 10)
+      } else {
+        lastPoint = {x: x, y: y}
+        drawCircle(x, y, 3)
+      }
     }
 
-    canvas.ontouchmove = function() {
-      console.log("边模变动")
+    canvas.ontouchmove = function(a) {
+      var x = a.touches[0].clientX
+      var y = a.touches[0].clientY
+      if (!using) {
+        return
+      }
+      if (eraserEnabled) {
+        context.clearRect(x - 5, y - 5, 10, 10)
+      } else {
+        newPoint = {x: x, y: y}
+        drawCircle(x, y, 3)
+        drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y)
+        lastPoint = newPoint
+      }
     }
 
-    canvas.ontouchend = function() {
-      console.log("摸完了")
+    canvas.ontouchend = function(a) {
+      using=false
     }
   } else {
     //非触屏设备
@@ -77,10 +98,12 @@ function lisenToUser(canvas) {
       if (eraserEnabled) {
         context.clearRect(x - 5, y - 5, 10, 10)
       } else {
-        lastPoint = { x: x, y: y }
+        lastPoint = {x: x, y: y }
         drawCircle(x, y, 3)
       }
     }
+
+
     canvas.onmousemove = function(a) {
       var x = a.clientX
       var y = a.clientY
