@@ -62,6 +62,11 @@ thick.onclick=function() {
   lineWidth=10
 }
 
+clear.onclick=function() {
+  context.clearRect(0, 0, canvas.width, canvas.height)
+}
+
+
 function drawCircle(x, y, radius) {
   context.beginPath()
   context.arc(x, y, radius, 0, Math.PI * 2)
@@ -108,10 +113,10 @@ function lisenToUser(canvas) {
       var y = a.touches[0].clientY
       using = true
       if (eraserEnabled) {
-        context.clearRect(x - 5, y - 5, 15, 15)
+        context.clearRect(x - 5, y - 5, 20, 20)
       } else {
         lastPoint = {x: x, y: y}
-        drawCircle(x, y, lineWidth/2)
+        drawCircle(x, y, lineWidth/2-0.5)
       }
     }
 
@@ -122,10 +127,10 @@ function lisenToUser(canvas) {
         return
       }
       if (eraserEnabled) {
-        context.clearRect(x - 5, y - 5, 15, 15)
+        context.clearRect(x - 5, y - 5, 20, 20)
       } else {
         newPoint = {x: x, y: y}
-        drawCircle(x, y, lineWidth/2)
+        drawCircle(x, y, lineWidth/2-0.5)
         drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y)
         lastPoint = newPoint
       }
@@ -141,10 +146,10 @@ function lisenToUser(canvas) {
       var y = a.clientY
       using = true
       if (eraserEnabled) {
-        context.clearRect(x - 5, y - 5, 15, 15)
+        context.clearRect(x - 5, y - 5, 20, 20)
       } else {
         lastPoint = {x: x, y: y }
-        drawCircle(x, y, lineWidth/2)
+        drawCircle(x, y, lineWidth/2-0.5)
       }
     }
 
@@ -157,13 +162,13 @@ function lisenToUser(canvas) {
       }
       //如果using是false就执行return跳出函数，就不会执行下面的if，如果using是true函数就继续向下执行，不会return
       if (eraserEnabled) {
-        context.clearRect(x - 5, y - 5, 15, 15)
+        context.clearRect(x - 5, y - 5, 20, 20)
         //这里容易出现一种情况就，我点了橡皮擦，没有按下鼠标橡皮擦，就开始工作了。这样在鼠标移动的时候，就会擦掉我的画。我们需要的是按下鼠标橡皮才开始工作。
         //分支语句的意义在于如果橡皮工作，画笔就不工作。
         //如果橡皮没有被按就和原来的代码没有区别，使用分支语句，不需要对原有代码做大的改动
       } else {
         newPoint = { x: x, y: y }
-        drawCircle(x, y, lineWidth/2)
+        drawCircle(x, y, lineWidth/2-0.5)
         drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y) //  注意要实时更新起点的位置
         lastPoint = newPoint // 鼠标只要一动上一个点就变成现在移动到的点
         //只要一移动起点就变成现鼠标移动到的这个点，从而实现连续划线
