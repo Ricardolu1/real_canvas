@@ -5,6 +5,15 @@ lisenToUser(canvas)
 
 var eraserEnabled = false
 
+function bodyScroll(event){
+  event.preventDefault();
+}
+
+document.body.addEventListener('touchmove',bodyScroll,false);
+document.body.style.position='fixed';
+document.body.style.width='100%';
+
+
 
 pen.onclick=function () {
   eraserEnabled = false
