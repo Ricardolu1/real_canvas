@@ -46,6 +46,9 @@ body{
   box-shadow: 0 0 3px rgba(0,0,0,0.25);
   transition: all 0.3s;
 }
+.colors >li.black{
+  background: black;
+}
 
 .colors >li.red{
   background: red;
