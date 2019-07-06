@@ -5,10 +5,6 @@ lisenToUser(canvas)
 
 var eraserEnabled = false
 
-$("body").bind("touchmove",function(event){
-  event.preventDefault();
-});
-
 
 
 pen.onclick=function () {
@@ -104,7 +100,6 @@ function lisenToUser(canvas) {
     canvas.ontouchstart = function(a) {
       var x = a.touches[0].clientX
       var y = a.touches[0].clientY
-      console.log(x, y)
       using = true
       if (eraserEnabled) {
         context.clearRect(x - 5, y - 5, 15, 15)
