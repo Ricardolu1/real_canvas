@@ -4,7 +4,7 @@ autoSetCanvas(canvas)
 lisenToUser(canvas)
 
 var eraserEnabled = false
-
+var lineWidth=5;
 
 
 pen.onclick=function () {
@@ -54,7 +54,13 @@ blue.onclick=function() {
   black.classList.remove('active')
 }
 
+thin.onclick=function() {
+  lineWidth=5
+}
 
+thick.onclick=function() {
+  lineWidth=10
+}
 
 function drawCircle(x, y, radius) {
   context.beginPath()
@@ -65,7 +71,7 @@ function drawCircle(x, y, radius) {
 function drawLine(x1, y1, x2, y2) {
   context.beginPath()
   context.moveTo(x1, y1) //起点
-  context.lineWidth = 6
+  context.lineWidth = lineWidth
   context.lineTo(x2, y2) //终点
   context.stroke()
   context.closePath()
@@ -105,7 +111,7 @@ function lisenToUser(canvas) {
         context.clearRect(x - 5, y - 5, 15, 15)
       } else {
         lastPoint = {x: x, y: y}
-        drawCircle(x, y, 3)
+        drawCircle(x, y, lineWidth/2)
       }
     }
 
@@ -119,7 +125,7 @@ function lisenToUser(canvas) {
         context.clearRect(x - 5, y - 5, 15, 15)
       } else {
         newPoint = {x: x, y: y}
-        drawCircle(x, y, 3)
+        drawCircle(x, y, lineWidth/2)
         drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y)
         lastPoint = newPoint
       }
@@ -138,7 +144,7 @@ function lisenToUser(canvas) {
         context.clearRect(x - 5, y - 5, 15, 15)
       } else {
         lastPoint = {x: x, y: y }
-        drawCircle(x, y, 3)
+        drawCircle(x, y, lineWidth/2)
       }
     }
 
@@ -157,7 +163,7 @@ function lisenToUser(canvas) {
         //如果橡皮没有被按就和原来的代码没有区别，使用分支语句，不需要对原有代码做大的改动
       } else {
         newPoint = { x: x, y: y }
-        drawCircle(x, y, 3)
+        drawCircle(x, y, lineWidth/2)
         drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y) //  注意要实时更新起点的位置
         lastPoint = newPoint // 鼠标只要一动上一个点就变成现在移动到的点
         //只要一移动起点就变成现鼠标移动到的这个点，从而实现连续划线

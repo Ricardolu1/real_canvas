@@ -66,3 +66,22 @@ body{
   transform: scale(1.2);
   
 } 
+
+.sizes{
+  position: fixed;
+  right: 10px;
+  top:10px;
+}
+.sizes>.thin{
+  height: 0;
+  width: 20px;
+  border-top: 3px solid black
+}
+.sizes>.thick{
+  height: 0;
+  width: 20px;
+  border-top: 6px solid black
+}
+.sizes>li{
+  margin: 20px 0;
+}
