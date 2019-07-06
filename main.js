@@ -1,3 +1,4 @@
+
 var canvas = document.getElementById("canvas")
 var context = canvas.getContext("2d")
 autoSetCanvas(canvas)
@@ -66,6 +67,9 @@ clear.onclick=function() {
   context.clearRect(0, 0, canvas.width, canvas.height)
 }
 
+save.onclick=function() {
+
+}
 
 function drawCircle(x, y, radius) {
   context.beginPath()
