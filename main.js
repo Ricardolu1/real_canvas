@@ -4,26 +4,54 @@ autoSetCanvas(canvas)
 lisenToUser(canvas)
 
 var eraserEnabled = false
-eraser.onclick = function() {
+
+
+pen.onclick=function () {
+  eraserEnabled = false
+  pen.classList.add('active')
+  eraser.classList.remove('active')
+
+}
+eraser.onclick=function () {
   eraserEnabled = true
-  actions.className = "actions x"
+  eraser.classList.add('active')
+  pen.classList.remove('active')
 }
 
-brush.onclick = function() {
-  eraserEnabled = false
-  actions.className = "actions"
+red.onclick=function() {
+  context.fillStyle='red'
+  context.strokeStyle='red'
+  red.classList.add('active')
+  green.classList.remove('active')
+  blue.classList.remove('active')
 }
+
+green.onclick=function() {
+  context.fillStyle='green'
+  context.strokeStyle='green'
+  green.classList.add('active')
+  red.classList.remove('active')
+  blue.classList.remove('active')
+}
+
+blue.onclick=function() {
+  context.fillStyle='blue'
+  context.strokeStyle='blue'
+  blue.classList.add('active') 
+  green.classList.remove('active')
+  red.classList.remove('active')
+}
+
+
 
 function drawCircle(x, y, radius) {
   context.beginPath()
-  context.fillStyle = "black"
   context.arc(x, y, radius, 0, Math.PI * 2)
   context.fill()
 }
 
 function drawLine(x1, y1, x2, y2) {
   context.beginPath()
-  context.strokeStyle = "black"
   context.moveTo(x1, y1) //起点
   context.lineWidth = 6
   context.lineTo(x2, y2) //终点
@@ -63,7 +91,7 @@ function lisenToUser(canvas) {
       console.log(x, y)
       using = true
       if (eraserEnabled) {
-        context.clearRect(x - 5, y - 5, 10, 10)
+        context.clearRect(x - 5, y - 5, 15, 15)
       } else {
         lastPoint = {x: x, y: y}
         drawCircle(x, y, 3)
@@ -77,7 +105,7 @@ function lisenToUser(canvas) {
         return
       }
       if (eraserEnabled) {
-        context.clearRect(x - 5, y - 5, 10, 10)
+        context.clearRect(x - 5, y - 5, 15, 15)
       } else {
         newPoint = {x: x, y: y}
         drawCircle(x, y, 3)
@@ -96,7 +124,7 @@ function lisenToUser(canvas) {
       var y = a.clientY
       using = true
       if (eraserEnabled) {
-        context.clearRect(x - 5, y - 5, 10, 10)
+        context.clearRect(x - 5, y - 5, 15, 15)
       } else {
         lastPoint = {x: x, y: y }
         drawCircle(x, y, 3)
@@ -112,7 +140,7 @@ function lisenToUser(canvas) {
       }
       //如果using是false就执行return跳出函数，就不会执行下面的if，如果using是true函数就继续向下执行，不会return
       if (eraserEnabled) {
-        context.clearRect(x - 5, y - 5, 10, 10)
+        context.clearRect(x - 5, y - 5, 15, 15)
         //这里容易出现一种情况就，我点了橡皮擦，没有按下鼠标橡皮擦，就开始工作了。这样在鼠标移动的时候，就会擦掉我的画。我们需要的是按下鼠标橡皮才开始工作。
         //分支语句的意义在于如果橡皮工作，画笔就不工作。
         //如果橡皮没有被按就和原来的代码没有区别，使用分支语句，不需要对原有代码做大的改动
