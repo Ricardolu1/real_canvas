@@ -5,13 +5,9 @@ lisenToUser(canvas)
 
 var eraserEnabled = false
 
-function bodyScroll(event){
+$("body").bind("touchmove",function(event){
   event.preventDefault();
-}
-
-document.body.addEventListener('touchmove',bodyScroll,false);
-document.body.style.position='fixed';
-document.body.style.width='100%';
+});
 
 
 
