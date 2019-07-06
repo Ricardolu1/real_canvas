@@ -1,74 +1,77 @@
-
 var canvas = document.getElementById("canvas")
 var context = canvas.getContext("2d")
 autoSetCanvas(canvas)
 lisenToUser(canvas)
 
 var eraserEnabled = false
-var lineWidth=5;
+var lineWidth = 5
 
-
-pen.onclick=function () {
+pen.onclick = function() {
   eraserEnabled = false
-  pen.classList.add('active')
-  eraser.classList.remove('active')
-
+  pen.classList.add("active")
+  eraser.classList.remove("active")
 }
-eraser.onclick=function () {
+eraser.onclick = function() {
   eraserEnabled = true
-  eraser.classList.add('active')
-  pen.classList.remove('active')
+  eraser.classList.add("active")
+  pen.classList.remove("active")
 }
-black.onclick=function() {
-  context.fillStyle='red'
-  context.strokeStyle='red'
-  black.classList.add('active')
-  green.classList.remove('active')
-  blue.classList.remove('active')
-  red.classList.remove('active')
-}
-
-red.onclick=function() {
-  context.fillStyle='red'
-  context.strokeStyle='red'
-  red.classList.add('active')
-  green.classList.remove('active')
-  blue.classList.remove('active')
-  black.classList.remove('active')
+black.onclick = function() {
+  context.fillStyle = "red"
+  context.strokeStyle = "red"
+  black.classList.add("active")
+  green.classList.remove("active")
+  blue.classList.remove("active")
+  red.classList.remove("active")
 }
 
-green.onclick=function() {
-  context.fillStyle='green'
-  context.strokeStyle='green'
-  green.classList.add('active')
-  red.classList.remove('active')
-  blue.classList.remove('active')
-  black.classList.remove('active')
+red.onclick = function() {
+  context.fillStyle = "red"
+  context.strokeStyle = "red"
+  red.classList.add("active")
+  green.classList.remove("active")
+  blue.classList.remove("active")
+  black.classList.remove("active")
 }
 
-blue.onclick=function() {
-  context.fillStyle='blue'
-  context.strokeStyle='blue'
-  blue.classList.add('active') 
-  green.classList.remove('active')
-  red.classList.remove('active')
-  black.classList.remove('active')
+green.onclick = function() {
+  context.fillStyle = "green"
+  context.strokeStyle = "green"
+  green.classList.add("active")
+  red.classList.remove("active")
+  blue.classList.remove("active")
+  black.classList.remove("active")
 }
 
-thin.onclick=function() {
-  lineWidth=5
+blue.onclick = function() {
+  context.fillStyle = "blue"
+  context.strokeStyle = "blue"
+  blue.classList.add("active")
+  green.classList.remove("active")
+  red.classList.remove("active")
+  black.classList.remove("active")
 }
 
-thick.onclick=function() {
-  lineWidth=10
+thin.onclick = function() {
+  lineWidth = 5
 }
 
-clear.onclick=function() {
+thick.onclick = function() {
+  lineWidth = 10
+}
+
+clear.onclick = function() {
   context.clearRect(0, 0, canvas.width, canvas.height)
 }
 
-save.onclick=function() {
-
+save.onclick = function() {
+  var url = canvas.toDataURL("image/png")
+  var a = document.createElement("a")
+  document.body.appendChild(a)
+  a.href = url
+  a.download= '我的画儿'
+  a.target = "_blank"
+  a.click()
 }
 
 function drawCircle(x, y, radius) {
@@ -105,8 +108,8 @@ function autoSetCanvas(canvas) {
 function lisenToUser(canvas) {
   var using = false //默认情况下，在使用画笔。意思是工具的使用状态
 
-  var lastPoint = {x: undefined, y: undefined }
-  var newPoint = {x: undefined, y: undefined }
+  var lastPoint = { x: undefined, y: undefined }
+  var newPoint = { x: undefined, y: undefined }
 
   //特性检测
   if (document.body.ontouchstart !== undefined) {
@@ -119,8 +122,8 @@ function lisenToUser(canvas) {
       if (eraserEnabled) {
         context.clearRect(x - 5, y - 5, 20, 20)
       } else {
-        lastPoint = {x: x, y: y}
-        drawCircle(x, y, lineWidth/2-0.5)
+        lastPoint = { x: x, y: y }
+        drawCircle(x, y, lineWidth / 2 - 0.5)
       }
     }
 
@@ -133,15 +136,15 @@ function lisenToUser(canvas) {
       if (eraserEnabled) {
         context.clearRect(x - 5, y - 5, 20, 20)
       } else {
-        newPoint = {x: x, y: y}
-        drawCircle(x, y, lineWidth/2-0.5)
+        newPoint = { x: x, y: y }
+        drawCircle(x, y, lineWidth / 2 - 0.5)
         drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y)
         lastPoint = newPoint
       }
     }
 
     canvas.ontouchend = function(a) {
-      using=false
+      using = false
     }
   } else {
     //非触屏设备
@@ -152,11 +155,10 @@ function lisenToUser(canvas) {
       if (eraserEnabled) {
         context.clearRect(x - 5, y - 5, 20, 20)
       } else {
-        lastPoint = {x: x, y: y }
-        drawCircle(x, y, lineWidth/2-0.5)
+        lastPoint = { x: x, y: y }
+        drawCircle(x, y, lineWidth / 2 - 0.5)
       }
     }
-
 
     canvas.onmousemove = function(a) {
       var x = a.clientX
@@ -172,7 +174,7 @@ function lisenToUser(canvas) {
         //如果橡皮没有被按就和原来的代码没有区别，使用分支语句，不需要对原有代码做大的改动
       } else {
         newPoint = { x: x, y: y }
-        drawCircle(x, y, lineWidth/2-0.5)
+        drawCircle(x, y, lineWidth / 2 - 0.5)
         drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y) //  注意要实时更新起点的位置
         lastPoint = newPoint // 鼠标只要一动上一个点就变成现在移动到的点
         //只要一移动起点就变成现鼠标移动到的这个点，从而实现连续划线
