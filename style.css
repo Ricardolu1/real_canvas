@@ -75,16 +75,31 @@ body{
   position: fixed;
   right: 10px;
   top:10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .sizes>.thin{
   height: 0;
   width: 20px;
-  border-top: 3px solid black
+  border: 3px solid black;
 }
 .sizes>.thick{
   height: 0;
   width: 20px;
-  border-top: 6px solid black
+  border: 8px solid black;
+}
+
+.sizes>.thin.active{
+  box-shadow: 0 0 5px rgba(0,0,0,0.95);
+  transform: scale(1.1);
+  
+}
+.sizes>.thick.active{
+  box-shadow: 0 0 5px rgba(0,0,0,0.95);
+  transform: scale(1.1);
+  
 }
 .sizes>li{
   margin: 20px 0;

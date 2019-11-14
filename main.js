@@ -3,6 +3,7 @@ var context = canvas.getContext("2d")
 autoSetCanvas(canvas)
 lisenToUser(canvas)
 
+
 var eraserEnabled = false
 var lineWidth = 5
 
@@ -54,10 +55,14 @@ blue.onclick = function() {
 
 thin.onclick = function() {
   lineWidth = 5
+  thin.classList.add("active")
+  thick.classList.remove("active")
 }
 
 thick.onclick = function() {
   lineWidth = 10
+  thick.classList.add("active")
+  thin.classList.remove("active")
 }
 
 clear.onclick = function() {
