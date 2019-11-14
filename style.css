@@ -9,6 +9,7 @@ ul,ol{
 }
 body{
    overflow: hidden;  /*去掉滚动条 */
+   background: #FCF9EA;
 }
 *{
   padding: 0;
